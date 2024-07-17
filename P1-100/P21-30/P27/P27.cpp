@@ -2,17 +2,17 @@
 using namespace std;
 class Solution {
   public:
-    int removeElement(vector<int> &nums, int val) {//采用快慢指针，慢指针左侧是不相等的数
-    //快指针只关注不相等的数，将其放到慢指针的位置
-        int slow = 0;
-        int fast = 0;
-        while (fast < nums.size()) {
-            if (nums[fast] != val) {
-                nums[slow++] = nums[fast];
+    int removeElement(vector<int> &nums, int val) {
+        int left = 0;                //左侧是与val不相等的数
+        int right = nums.size() - 1; //右侧是与val相等的数
+        while (left <= right) {
+            if (nums[left] == val) { //如果相等，放在右边界（可以省略，直接把右边界未比较的数放到左边界即可），右边界左移
+                nums[left] = nums[right--];
+            } else { //如果不等，左边界右移
+                left++;
             }
-            fast++;
         }
-        return slow;
+        return left;
     }
 };
 
