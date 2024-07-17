@@ -25,4 +25,5 @@ int main() {
     Solution solution;
     int res = solution.search(nums, target);
     cout << res << endl;
+    return 0;
 }
