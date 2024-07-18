@@ -7,15 +7,11 @@ class Solution {
         int right = 0; //子数组右边界下一个
         long sum = 0;  //累加和
         int minLength = INT_MAX;
-        while (right != nums.size() || sum >= target) {
-            //子数组右边界已经到达nums末尾，并且累加和小于target
-            //说明后续累加和不可能大于等于target
-            if (sum >= target) { //当前子数组累加和已经大于等于target left右移
-                minLength = min(minLength, right - left); //统计子数组长度最小值
+        while (right < nums.size()) {
+            sum += nums[right++];//sum < target 右扩
+            while(sum >= target){//左边界右扩直到sum < target
+                minLength = min(minLength, right - left);//统计子数组长度最小值
                 sum -= nums[left++];
-            } else if (right < nums.size()) {
-                //当前子数组累加和小于target right右移
-                sum += nums[right++];
             }
         }
         return minLength == INT_MAX ? 0 : minLength;
