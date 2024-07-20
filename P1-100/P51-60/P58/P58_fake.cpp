@@ -14,16 +14,16 @@ int calSum(int &start, int &end) {
 }
 int main() {
     int n = 0;
-    cin >> n;
+    scanf("%d", &n);
     for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+        scanf("%d", &arr[i]);
         arr[i] += i == 0 ? 0 : arr[i - 1]; //计算累加和
     }
     int start = 0;
     int end = 0;
-    while (cin >> start >> end) {
+    while (~scanf("%d%d", &start, &end)) {
         int res = calSum(start, end);
-        cout << res << endl;
+        printf("%d\n", res);
     }
     return 0;
 }
