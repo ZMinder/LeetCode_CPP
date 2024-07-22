@@ -12,21 +12,18 @@ struct ListNode {
 class Solution {
   public:
     ListNode *removeElements(ListNode *head, int val) {
-        //删除相等的头结点
-        while (head != NULL && head->val == val) {
-            head = head->next;
-        }
-        //删除中间部分相等的节点
-        ListNode *temp = head;
-        //temp != NULL 判断移除头结点相等的结点后是否为空
-        while (temp != NULL && temp->next != NULL) { // temp->val != val
+        //设置了虚拟的头结点，使得所有要删除的结点都成为了中间节点，代码简洁
+        ListNode *fake = new ListNode(0);
+        fake->next = head;
+        ListNode *temp = fake;
+        while (temp->next != NULL) {
             if (temp->next->val == val) {
                 temp->next = temp->next->next;
             } else {
                 temp = temp->next;
             }
         }
-        return head;
+        return fake->next;
     }
 };
 
