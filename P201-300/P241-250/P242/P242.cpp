@@ -6,15 +6,15 @@ class Solution {
         if (s.size() != t.size()) { //两个字符串长度不等 必然不会成为字母异位词
             return false;
         }
-        //使用哈希表记录每个字母的出现次数
-        unordered_map<char, int> map;
-        for (int i = 0; i < s.size(); i++) { //统计s字符串中每个字母出现的次数
-            map[s[i]]++;
-            map[t[i]]--;
+        //使用数组记录每个字母的出现次数（题目说明仅包含小写字母）
+        int arr[26] = {0};
+        for (int i = 0; i < s.size(); i++) {
+            arr[s[i] - 'a']++;
+            arr[t[i] - 'a']--;
         }
-        for (unordered_map<char, int>::iterator iter = map.begin();
-             iter != map.end(); iter++) {
-            if (iter->second != 0) { //如果存在不为0的字母 必然不是字母异位词
+        //判断是否全为0
+        for (int i = 0; i < 26; i++) {
+            if (arr[i]) {//如果非0 说明不是字母异位词
                 return false;
             }
         }
