@@ -28,4 +28,4 @@ class Solution {
         return res;
     }
 };
-int mian() { return 0; }
+int main() { return 0; }

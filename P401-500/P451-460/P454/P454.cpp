@@ -23,4 +23,4 @@ class Solution {
         return count;
     }
 };
-int mian() { return 0; }
+int main() { return 0; }
