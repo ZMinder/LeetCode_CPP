@@ -3,20 +3,23 @@ using namespace std;
 class Solution {
   public:
     bool canConstruct(string ransomNote, string magazine) {
-        //使用哈希表统计ransomNote中字符出现的次数
-        unordered_map<char, int> map;
-        for (int i = 0; i < ransomNote.size(); i++) {
-            map[ransomNote[i]]++;
+        if (ransomNote.size() > magazine.size()) {
+            return false;
         }
-        //统计magazine中字符出现的次数，在map中自减
-        for (int j = 0; j < magazine.size(); j++) {
-            map[magazine[j]]--;
-            if (map[magazine[j]] <= 0) { //如果自减完后<=0，从哈希表中删除
-                map.erase(magazine[j]);
+        int map[26] = {0}; //字符串中只出现小写字母，可以使用数组代替哈希表
+        for (int i = 0; i < magazine.size(); i++) {
+            //优先统计magazine中字符的个数
+            map[magazine[i] - 'a']++;
+        }
+        for (int j = 0; j < ransomNote.size(); j++) {
+            //遍历ransomNote，并让map中对应字符次数自减
+            map[ransomNote[j] - 'a']--;
+            if (map[ransomNote[j] - 'a'] < 0) {
+                //如果该字符次数小于0，说明magazine无法构成ransomNote的该字符
+                return false;
             }
         }
-        //如果ransomNote能由magazine组成，最终哈希表会为空（因为magazine字符至少会比ransomNote相等）
-        return map.empty();
+        return true;
     }
 };
 int main() {
