@@ -2,38 +2,41 @@
 using namespace std;
 class MyQueue {
   private:
-    stack<int> *help;
-    stack<int> *real;
+    stack<int> *in;
+    stack<int> *out;
+
+    void in2out() {
+        while (!in->empty()) { //将in栈倒入out栈
+            out->push(in->top());
+            in->pop();
+        }
+    }
 
   public:
     MyQueue() { //初始化两个栈
-        help = new stack<int>();
-        real = new stack<int>();
+        in = new stack<int>();
+        out = new stack<int>();
     }
 
-    void push(int x) {
-        while (!real->empty()) { //当实际用于存储的栈非空时，将其倒入辅助栈
-            help->push(real->top());
-            real->pop();
-        }
-        //将给定元素压入栈底
-        real->push(x);
-        while (!help->empty()) {
-            //将辅助栈的元素压入实际存储的栈，并且保证弹出的顺序满足队列规则
-            real->push(help->top());
-            help->pop();
-        }
-    }
+    void push(int x) { in->push(x); }
 
     int pop() {
-        int temp = real->top();
-        real->pop();
+        if (out->empty()) { //将in栈倒入out栈
+            in2out();
+        }
+        int temp = out->top();
+        out->pop();
         return temp;
     }
 
-    int peek() { return real->top(); }
+    int peek() {
+        if (out->empty()) { //将in栈倒入out栈
+            in2out();
+        }
+        return out->top();
+    }
 
-    bool empty() { return real->empty(); }
+    bool empty() { return in->empty() && out->empty(); }
 };
 
 int main() {
